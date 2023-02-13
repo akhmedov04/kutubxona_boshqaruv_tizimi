@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Kitoblar</title>
+</head>
+<body>
+    <h1>Hamma kitoblar ro'yxati:</h1>
+    <br>
+    <br>
+    <form method="get">
+        <input type="text" name="qidirish" placeholder="Ktobni yozing">
+        <button type="submit">Qidirish</button>
+    </form>
+    <br>
+    <br>
+    {% for kitob in kitoblar %}
+    <a href="/kitoblar/{{kitob.id}}/"></a><h2>{{kitob.id}}. {{kitob.nom}}</h2><a href="/kitob_ochir/{{kitob.id}}/"> <button>O'chirish</button></a>
+    {% endfor %}
+    <br>
+    <hr>
+    <form action="/kitoblar/" method="post">{% csrf_token %}
+        {{ forma.as_p }}
+        <button type="submit">Qo'shish</button>
+    </form>
+    <br>
+    <br>
+</body>
+</html>

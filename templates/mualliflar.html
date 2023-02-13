@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mualliflar</title>
+</head>
+<body>
+  <h1>Mualliflar ro'yxati:</h1>
+  <br>
+  <br>
+  {% for i in mualliflar %}
+  <h2><a href="/mualliflar/{{i.id}}">{{i.id}}. {{i.ism}}</a></h2>
+  {% endfor %}
+  <br>
+  <br>
+  <form method="get">
+      <input type="text" name="qidirish" placeholder="Muallifni yozing">
+      <button type="submit">Qidirish</button>
+  </form>
+  <br>
+  <br>
+  <form action="/mualliflar/" method="post">{% csrf_token %}
+      {{ authors }}
+      <button type="submit">Qo'shish</button>
+  </form>
+</body>
+</html>

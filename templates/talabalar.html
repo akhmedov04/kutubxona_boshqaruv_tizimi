@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Talabalar</title>
+</head>
+<body>
+    <h1>Hamma talabalar ro'yxati:</h1>
+    <br>
+    <br>
+    <form method="get">
+        <input type="text" name="qidirish" placeholder="Talabani yozing">
+        <button type="submit">Qidirish</button>
+    </form>
+    <br>
+    <br>
+    {% for i in talabalar %}
+    <h2><a href="/talabalar/{{i.id}}/">{{i.id}}. {{i.ism}}</a></h2><a href="/talaba_ochir/{{i.id}}/"> <button>O'chirish</button></a>
+    {% endfor %}
+    <br>
+    <br>
+    <form action="/talabalar/" method="post">{% csrf_token %}
+        {{ forma }}
+        <button type="submit">Qo'shish</button>
+    </form>
+    <br>
+    <br>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Adminlar</title>
+</head>
+<body>
+  <h1>Hamma adminlar:</h1>
+  <br>
+  <hr>
+  <br>
+  {% for admin in adminlar %}
+  <h3>{{admin.id}}.{{ admin.ism }}, Ish vaqti: {{ admin.ish_vaqti }}</h3>
+  {% endfor %}
+  <hr>
+  <form action="/admins/" method="post"> {%csrf_token%}
+      {{forma.as_p}}
+      <button type="submit">Qo'shish</button>
+  </form>
+</body>
+</html>

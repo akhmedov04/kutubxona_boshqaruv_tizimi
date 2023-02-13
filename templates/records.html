@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Records</title>
+</head>
+<body>
+    <h1>Barcha recordlar:</h1>
+    {% for record in records %}
+    <h3> {{ record.id }}. {{ record.talaba.ism }} - {{ record.kitob.nom }} </h3>
+    {% endfor %}
+    <hr>
+    <br>
+    <form action="/records/" method="post" > {% csrf_token %}
+        {{ forma.as_p }}
+        <button type="submit">Qo'shish</button>
+    </form>
+</body>
+</html>
