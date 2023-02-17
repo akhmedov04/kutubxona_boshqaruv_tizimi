@@ -17,12 +17,14 @@
     {% for kitob in kitoblar %}
     <a href="/kitoblar/{{kitob.id}}/"></a><h2>{{kitob.id}}. {{kitob.nom}}</h2><a href="/kitob_ochir/{{kitob.id}}/"> <button>O'chirish</button></a>
     {% endfor %}
+    {%if user.is_authenticated%}
     <br>
     <hr>
-    <form action="/kitoblar/" method="post">{% csrf_token %}
-        {{ forma.as_p }}
-        <button type="submit">Qo'shish</button>
-    </form>
+        <form action="/kitoblar/" method="post">{% csrf_token %}
+            {{ forma.as_p }}
+            <button type="submit">Qo'shish</button>
+        </form>
+    {%endif%}
     <br>
     <br>
 </body>

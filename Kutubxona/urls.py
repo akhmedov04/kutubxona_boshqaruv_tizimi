@@ -21,7 +21,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('salom/', salomlash),
     path('salomber/', salom),
-    path('', main),
+    path('main/', main),
+    path('', loginview),
+    path('register/', registerview),
     path('talabalar/', talabalar),
     path('kitoblar/', kitoblar),
     path('talabalar/<int:son>/', talaba),
@@ -31,4 +33,5 @@ urlpatterns = [
     path('mualliflar/<int:son>', muallif),
     path('records/', records),
     path('admins/', admins),
+    path('logout/', logoutview),
 ]

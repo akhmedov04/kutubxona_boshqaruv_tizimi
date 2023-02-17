@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import *
 from .models import *
 from .forms import *
 
@@ -12,7 +14,9 @@ def salom(request):
     return render(request, "salom.html", data)
 
 def main(request):
-    return render(request, "bosh_sahifa.html")
+    if request.user.is_authenticated:
+        return render(request, "bosh_sahifa.html")
+    return redirect('/')
 
 def talabalar(request):
     if request.method == 'POST':
@@ -53,18 +57,19 @@ def mualliflar(request):
     return render(request, "mualliflar.html", data)
 
 def kitoblar(request):
-    if request.method == 'POST':
-        forma = KitobForm(request.POST)
-        if forma.is_valid():
-            forma.save()
-        return redirect('/kitoblar/')
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            forma = KitobForm(request.POST)
+            if forma.is_valid():
+                forma.save()
+            return redirect('/kitoblar/')
     soz = request.GET.get('qidirish')
     if soz is None:
         kt = Kitob.objects.all()
     else:
         kt = Kitob.objects.filter(nom__contains=soz)
     data = {"kitoblar": kt, "mualliflar": Muallif.objects.all(),
-            "forma": KitobForm}
+            "forma": KitobForm, "user": User.objects.all()}
     return render(request, "kitoblar.html", data)
 
 def talaba(request, son):
@@ -112,3 +117,28 @@ def admins(request):
     data= {'adminlar': Admin.objects.all(),
            'forma': AdminForm}
     return render(request, 'admins.html', data)
+
+def loginview(request):
+    if request.method == 'POST':
+        user = authenticate(
+            username=request.POST.get('l'),
+            password=request.POST.get('p'),
+        )
+        if user is None:
+            return redirect("/")
+        login(request, user)
+        return redirect('/main/')
+    return render(request, 'login.html')
+
+def logoutview(request):
+    logout(request)
+    return redirect('/')
+
+def registerview(request):
+    if request.method == "POST" and request.POST.get('p') == request.POST.get('cp'):
+        User.objects.create_user(
+            username=request.POST.get('l'),
+            password=request.POST.get('p')
+        )
+        return redirect('/')
+    return render(request, 'register.html')
